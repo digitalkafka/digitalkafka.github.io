@@ -1,26 +1,13 @@
 // https://github.com/jsx-eslint/eslint-plugin-react/issues/3423
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-import {
-  useGLTF,
-  useHelper,
-  Instances,
-  Instance,
-  OrbitControls,
-  Html,
-} from "@react-three/drei"
-import { useThree, extend, useFrame } from "@react-three/fiber"
-import React, {
-  useMemo,
-  useRef,
-  useState,
-  useLayoutEffect,
-  useEffect,
-} from "react"
-import styled, { keyframes } from "styled-components"
-import * as THREE from "three"
-import { OrbitControls as OC } from "three/examples/jsm/controls/OrbitControls"
-import { brandPalette, resolve, randomN } from "./helpers"
+import { useGLTF, useHelper, Instances, Instance, OrbitControls, Html } from '@react-three/drei'
+import { useThree, extend, useFrame } from '@react-three/fiber'
+import React, { useMemo, useRef, useState, useLayoutEffect, useEffect } from 'react'
+import styled, { keyframes } from 'styled-components'
+import * as THREE from 'three'
+import { OrbitControls as OC } from 'three/examples/jsm/controls/OrbitControls'
+import { brandPalette, resolve, randomN } from './helpers'
 
 const color = new THREE.Color()
 
@@ -33,16 +20,9 @@ const Points = ({ objectUrl, nodesData, onNodeClick, config }) => {
   const positions = config.nodeCoords ? resolve(config.nodeCoords, nodes) : []
   const numPositions = positions ? positions.count : 0
   const numNodes = nodesData.length
-  const randomIndexes = useMemo(
-    () => randomN(0, numPositions, numNodes),
-    [numPositions, numNodes]
-  )
+  const randomIndexes = useMemo(() => randomN(0, numPositions, numNodes), [numPositions, numNodes])
 
-  const selectedPositions = randomIndexes.map((i) => [
-    positions.getX(i),
-    positions.getY(i),
-    positions.getZ(i),
-  ])
+  const selectedPositions = randomIndexes.map((i) => [positions.getX(i), positions.getY(i), positions.getZ(i)])
 
   const handleSelectedNode = (nodeId) => {
     setSelected(nodeId)
@@ -93,7 +73,7 @@ const Point = ({
   config,
   primaryColor,
   hoveredColor,
-  activeColor,
+  activeColor
 }) => {
   const ref = useRef()
   const [hovered, setHover] = useState(false)
@@ -105,10 +85,7 @@ const Point = ({
     ref.current.position.x = position[0] * config.nodeSigns[0]
     ref.current.position.z = position[1] * config.nodeSigns[1]
     ref.current.position.y = position[2] * config.nodeSigns[2]
-    ref.current.scale.x =
-      ref.current.scale.y =
-      ref.current.scale.z =
-        defaultScale
+    ref.current.scale.x = ref.current.scale.y = ref.current.scale.z = defaultScale
     ref.current.scale.x =
       ref.current.scale.y =
       ref.current.scale.z =
@@ -118,32 +95,21 @@ const Point = ({
       ref.current.scale.z =
         THREE.MathUtils.lerp(ref.current.scale.z, active ? 5 : 1, defaultScale)
     ref.current.color.lerp(
-      color.set(
-        hovered || active
-          ? brandPalette[hoveredColor]
-          : brandPalette[primaryColor]
-      ),
+      color.set(hovered || active ? brandPalette[hoveredColor] : brandPalette[primaryColor]),
       hovered || active ? 1 : defaultScale
     )
 
     if (hovered) {
       ref.current.color.lerp(
-        color.set(
-          hovered ? brandPalette[hoveredColor] : brandPalette[primaryColor]
-        ),
+        color.set(hovered ? brandPalette[hoveredColor] : brandPalette[primaryColor]),
         hovered ? 1 : defaultScale
       )
     }
 
     if (active) {
-      ref.current.scale.x =
-        ref.current.scale.y =
-        ref.current.scale.z +=
-          Math.sin(t) / 4
+      ref.current.scale.x = ref.current.scale.y = ref.current.scale.z += Math.sin(t) / 4
       ref.current.color.lerp(
-        color.set(
-          active ? brandPalette[activeColor] : brandPalette[primaryColor]
-        ),
+        color.set(active ? brandPalette[activeColor] : brandPalette[primaryColor]),
         active ? 1 : defaultScale
       )
     }
@@ -153,9 +119,7 @@ const Point = ({
       <>
         <Instance
           ref={ref}
-          onPointerOver={(e) => (
-            e.stopPropagation(), setHover(true), onNodeSelected(nodeId)
-          )}
+          onPointerOver={(e) => (e.stopPropagation(), setHover(true), onNodeSelected(nodeId))}
           onPointerOut={() => setHover(false)}
           onClick={() => onNodeClick(dialogData.hash)}
         />
@@ -183,15 +147,9 @@ const PointDialog = ({ position, dialogData, config }) => {
   })
   return (
     <mesh ref={ref}>
-      <meshStandardMaterial
-        roughness={0.75}
-        metalness={0.8}
-        emissive={brandPalette.ciano}
-      />
+      <meshStandardMaterial roughness={0.75} metalness={0.8} emissive={brandPalette.ciano} />
       <Html distanceFactor={2}>
-        <DialogContent>
-          {dialogData.hash ? <DialogHash>{dialogData.hash}</DialogHash> : null}
-        </DialogContent>
+        <DialogContent>{dialogData.hash ? <DialogHash>{dialogData.hash}</DialogHash> : null}</DialogContent>
       </Html>
     </mesh>
   )
@@ -208,7 +166,7 @@ const Model = (props) => {
     }
 
     scene.traverse((obj) => {
-      if (obj.type === "Mesh") {
+      if (obj.type === 'Mesh') {
         obj.receiveShadow = true
         obj.castShadow = true
       }
@@ -220,7 +178,7 @@ const Model = (props) => {
       metalness: props.model.metalness,
       roughness: props.model.roughness,
       opacity: props.model.opacity,
-      color: new THREE.Color(brandPalette[props.model.color]),
+      color: new THREE.Color(brandPalette[props.model.color])
     })
 
     const boxHelper = new THREE.BoxHelper(modelRef.current, 0xffffff)
@@ -317,7 +275,7 @@ const Particles = ({ count }) => {
     for (let i = 0; i < count; i++) {
       const t = Math.random() * 100
       const factor = 20 + Math.random() * 10
-      const speed = 0.01 + Math.random() / 200
+      const speed = 0.001 + Math.random() / 20000
       const xFactor = -5 + Math.random() * 10
       const yFactor = -5 + Math.random() * 10
       const zFactor = -5 + Math.random() * 10
@@ -336,18 +294,9 @@ const Particles = ({ count }) => {
       const s = Math.cos(t) / 6
 
       dummy.position.set(
-        (particle.mx / 10) * a +
-          xFactor +
-          Math.cos((t / 10) * factor) +
-          (Math.sin(t * 1) * factor) / 10,
-        (particle.my / 10) * b +
-          yFactor +
-          Math.sin((t / 10) * factor) +
-          (Math.cos(t * 2) * factor) / 10,
-        (particle.my / 10) * b +
-          zFactor +
-          Math.cos((t / 10) * factor) +
-          (Math.sin(t * 3) * factor) / 10
+        (particle.mx / 10) * a + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
+        (particle.my / 10) * b + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
+        (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
       )
       dummy.scale.set(s, s, s)
       dummy.rotation.set(s * 5, s * 5, s * 5)
@@ -361,13 +310,7 @@ const Particles = ({ count }) => {
     <>
       <instancedMesh ref={mesh} args={[null, null, count]}>
         <sphereGeometry args={[1]} />
-        <pointsMaterial
-          color={brandPalette.red}
-          size={0.02}
-          transparent={true}
-          sizeAttenuation={false}
-          opacity={0.3}
-        />
+        <pointsMaterial color={brandPalette.red} size={0.02} transparent={true} sizeAttenuation={false} opacity={0.3} />
       </instancedMesh>
     </>
   )
@@ -384,7 +327,7 @@ const CameraControls = ({ config }) => {
 
     const controls = new OC(camera, gl.domElement)
 
-    controls.addEventListener("change", () => {
+    controls.addEventListener('change', () => {
       console.log(camera.position)
       console.log(controlsRef.current.target)
     })
@@ -394,11 +337,7 @@ const CameraControls = ({ config }) => {
 
   useEffect(() => {
     if (controlsRef.current) {
-      controlsRef.current.target.set(
-        config.targetPosition[0],
-        config.targetPosition[1],
-        config.targetPosition[2]
-      )
+      controlsRef.current.target.set(config.targetPosition[0], config.targetPosition[1], config.targetPosition[2])
       controlsRef.current.update()
     }
   }, [controlsRef, camera, gl])

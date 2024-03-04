@@ -1,8 +1,8 @@
-import React from "react"
-import { createRoot } from "react-dom/client"
-import { ThreeCanary, defaultConfig } from "./lib"
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { ThreeCanary, defaultConfig } from './lib'
 
-import "./styles.css"
+import './styles.css'
 
 // Utils
 const choose = (choices) => {
@@ -15,13 +15,10 @@ const nodesDataFactory = (n) => {
   for (let i = 0; i < n; i += 1) {
     data.push({
       id: Math.floor(Math.random() * 100),
-      name: choose(["Arthur C. Clarke", "Douglas Adams", "Isaac Asimov"]),
-      level: choose(["human", "cyborg"]),
-      hash: choose([
-        "0x08eded6a76d84e309e3f09705ea2853f",
-        "0xdeadbeefe6a76d84e309e3f09705ea28589",
-      ]),
-      img: choose(["/assets/t1.jpg", "/assets/t2.jpg"]),
+      name: choose(['Arthur C. Clarke', 'Douglas Adams', 'Isaac Asimov']),
+      level: choose(['human', 'cyborg']),
+      hash: choose(['0x08eded6a76d84e309e3f09705ea2853f', '0xdeadbeefe6a76d84e309e3f09705ea28589']),
+      img: choose(['/assets/t1.jpg', '/assets/t2.jpg'])
     })
   }
   return data
@@ -33,7 +30,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       nodesData: nodesDataFactory(150),
-      nodeSelected: null,
+      nodeSelected: null
     }
   }
 
@@ -42,33 +39,31 @@ class App extends React.Component {
     return (
       <>
         <div
-          className={"App"}
+          className={'App'}
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            height: "100%",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            height: '100%'
           }}
         >
           <ThreeCanary
-            objectUrl={defaultConfig["cyborg"].objectUrl}
+            objectUrl={defaultConfig['cyborg'].objectUrl}
             nodes={this.state.nodesData}
             onNodeClick={(nodeId) => {
-              console.log("onNodeClick", nodeId)
+              console.log('onNodeClick', nodeId)
             }}
-            config={defaultConfig["cyborg"]}
+            config={defaultConfig['cyborg']}
           />
 
           <div
-            className={"Info"}
+            className={'Info'}
             style={{
               padding: 10,
-              color: this.state.nodeSelected
-                ? this.state.nodeSelected.color
-                : "#ffffff",
+              color: this.state.nodeSelected ? this.state.nodeSelected.color : '#ffffff'
             }}
           >
-            {this.state.nodeSelected ? this.state.nodeSelected.name : ""}
+            {this.state.nodeSelected ? this.state.nodeSelected.name : ''}
           </div>
         </div>
       </>
@@ -76,6 +71,6 @@ class App extends React.Component {
   }
 }
 
-const rootElement = document.getElementById("root")
+const rootElement = document.getElementById('root')
 const root = createRoot(rootElement)
 root.render(<App />)

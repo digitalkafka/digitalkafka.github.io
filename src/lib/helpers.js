@@ -1,6 +1,6 @@
-import { canaryConfig } from "./config/CanaryConfig"
-import { cyborgConfig } from "./config/CyborgConfig"
-import { gilConfig } from "./config/GilConfig"
+import { canaryConfig } from './config/CanaryConfig'
+import { cyborgConfig } from './config/CyborgConfig'
+import { gilConfig } from './config/GilConfig'
 
 // Generate a random integer between min and max
 const random = (min, max) => Math.floor(Math.random() * (max - min)) + min
@@ -17,23 +17,23 @@ const randomN = (min, max, n) => {
   return numbers
 }
 
-const resolve = (path, obj, separator = ".") => {
+const resolve = (path, obj, separator = '.') => {
   let properties = Array.isArray(path) ? path : path.split(separator)
   return properties.reduce((prev, curr) => prev && prev[curr], obj)
 }
 
 const brandPalette = {
-  ciano: "#01ffff",
-  magenta: "#e6007a",
-  white: "#ffffff",
-  black: "#000000",
-  red: "#c62825",
+  ciano: '#01ffff',
+  magenta: '#e6007a',
+  white: '#ffffff',
+  black: '#000000',
+  red: '#c62825'
 }
 
 const defaultConfig = {
   canary: canaryConfig,
   cyborg: cyborgConfig,
-  gil: gilConfig,
+  gil: gilConfig
 }
 
 export { brandPalette, defaultConfig, random, randomN, resolve }
