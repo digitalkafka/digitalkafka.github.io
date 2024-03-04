@@ -199,16 +199,19 @@ const PointDialog = ({ position, dialogData, config }) => {
 
 const Model = (props) => {
   const { scene, nodes, materials } = useGLTF(props.objectUrl)
+  const modelRef = useRef()
+  const boxHelperRef = useRef()
 
   useLayoutEffect(() => {
-    if (props.meshScale) {
-      if (nodes.canary) {
-        nodes.canary.scale.set(4, 4, 4)
-      }
+    if (props.meshScale && nodes.canary) {
+      nodes.canary.scale.set(4, 4, 4)
     }
 
     scene.traverse((obj) => {
-      obj.type === "Mesh" && (obj.receiveShadow = obj.castShadow = true)
+      if (obj.type === "Mesh") {
+        obj.receiveShadow = true
+        obj.castShadow = true
+      }
     })
 
     const material = materials[props.model.material]
@@ -219,9 +222,20 @@ const Model = (props) => {
       opacity: props.model.opacity,
       color: new THREE.Color(brandPalette[props.model.color]),
     })
-  }, [scene, nodes, materials])
 
-  return <primitive object={scene} {...props} />
+    const boxHelper = new THREE.BoxHelper(modelRef.current, 0xffffff)
+    const scaleFactor = new THREE.Vector3(4, 4, 4)
+    boxHelper.scale.copy(scaleFactor)
+
+    scene.add(boxHelper)
+    boxHelperRef.current = boxHelper
+
+    return () => {
+      scene.remove(boxHelperRef.current)
+    }
+  }, [scene, nodes, materials, props])
+
+  return <primitive object={scene} ref={modelRef} {...props} />
 }
 
 const Lights = ({ config }) => {
@@ -346,9 +360,9 @@ const Particles = ({ count }) => {
   return (
     <>
       <instancedMesh ref={mesh} args={[null, null, count]}>
-        <boxGeometry args={[1]} />
+        <sphereGeometry args={[1]} />
         <pointsMaterial
-          color={brandPalette.magenta}
+          color={brandPalette.red}
           size={0.02}
           transparent={true}
           sizeAttenuation={false}

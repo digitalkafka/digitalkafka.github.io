@@ -27,6 +27,7 @@ const brandPalette = {
   magenta: "#e6007a",
   white: "#ffffff",
   black: "#000000",
+  red: "#c62825",
 }
 
 const defaultConfig = {

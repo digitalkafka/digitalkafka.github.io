@@ -9,14 +9,14 @@ const cyborgConfig = {
   debug: false,
   model: {
     material: "Material_0",
-    scale: 0.3,
+    scale: 1,
     metalness: 0.2,
     roughness: 2,
     opacity: 1,
     color: "white",
   },
   gridPosition: [0, -0.12, 0.28],
-  cameraPosition: [0.15, 0.3, 0.85],
+  cameraPosition: [0.9, 1.8, 4.8],
   targetPosition: [0, 0.25, 0],
   pointColorIndex: {
     primary: "ciano",
@@ -27,7 +27,7 @@ const cyborgConfig = {
     position: [0, 0, 0],
     intensity: [50, 50, 50],
     distance: 10,
-    color: ["ciano", "magenta", "magenta"],
+    color: ["red", "red", "white"],
   },
   bloom: {
     kernelSize: 1,
