@@ -5,7 +5,7 @@ import { PerspectiveCamera } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { EffectComposer, Bloom, Glitch } from "@react-three/postprocessing"
 import React, { Suspense } from "react"
-import { Lights, Particles, Points, CameraControls, Model } from "./Components"
+import { Lights, Particles, CameraControls, Model } from "./Components"
 import { brandPalette } from "./helpers"
 
 const ThreeCanary = (props) => {
@@ -39,12 +39,7 @@ const ThreeCanary = (props) => {
           meshScale={config.meshScale}
           model={config.model}
         />
-        <Points
-          objectUrl={props.objectUrl}
-          nodesData={props.nodes}
-          onNodeClick={props.onNodeClick}
-          config={config}
-        />
+
         <Particles count={isMobile ? 50 : 200} />
 
         <EffectComposer multisampling={16}>

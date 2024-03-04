@@ -1,4 +1,5 @@
 import { canaryConfig } from "./config/CanaryConfig"
+import { cyborgConfig } from "./config/CyborgConfig"
 import { gilConfig } from "./config/GilConfig"
 
 // Generate a random integer between min and max
@@ -30,6 +31,7 @@ const brandPalette = {
 
 const defaultConfig = {
   canary: canaryConfig,
+  cyborg: cyborgConfig,
   gil: gilConfig,
 }
 

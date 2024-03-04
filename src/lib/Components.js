@@ -31,7 +31,7 @@ const Points = ({ objectUrl, nodesData, onNodeClick, config }) => {
 
   // Or nodes.Scene.children[0].geometry.attributes.position
   const positions = config.nodeCoords ? resolve(config.nodeCoords, nodes) : []
-  const numPositions = positions.count
+  const numPositions = positions ? positions.count : 0
   const numNodes = nodesData.length
   const randomIndexes = useMemo(
     () => randomN(0, numPositions, numNodes),
@@ -206,14 +206,16 @@ const Model = (props) => {
         nodes.canary.scale.set(4, 4, 4)
       }
     }
+
     scene.traverse((obj) => {
       obj.type === "Mesh" && (obj.receiveShadow = obj.castShadow = true)
     })
-    // 0.8 0.2
-    Object.assign(materials[props.model.material], {
-      wireframe: true,
+
+    const material = materials[props.model.material]
+    Object.assign(material, {
+      wireframe: false,
       metalness: props.model.metalness,
-      roughness: props.model.moughness,
+      roughness: props.model.roughness,
       opacity: props.model.opacity,
       color: new THREE.Color(brandPalette[props.model.color]),
     })
