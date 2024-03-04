@@ -17,7 +17,7 @@ const cyborgConfig = {
   },
   gridPosition: [0, 0, 0],
   cameraPosition: [0, -2.2, 3.8],
-  targetPosition: [0, 1.25, 0],
+  targetPosition: [0, 1, 0],
   pointColorIndex: {
     primary: 'ciano',
     hovered: 'magenta',

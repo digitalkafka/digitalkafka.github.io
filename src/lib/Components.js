@@ -1,7 +1,7 @@
 // https://github.com/jsx-eslint/eslint-plugin-react/issues/3423
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-import { useGLTF, useHelper, Instances, Instance, OrbitControls, Html } from '@react-three/drei'
+import { useGLTF, useHelper, Instances, Instance, OrbitControls, Html, Text } from '@react-three/drei'
 import { useThree, extend, useFrame } from '@react-three/fiber'
 import React, { useMemo, useRef, useState, useLayoutEffect, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
@@ -10,6 +10,44 @@ import { OrbitControls as OC } from 'three/examples/jsm/controls/OrbitControls'
 import { brandPalette, resolve, randomN } from './helpers'
 
 const color = new THREE.Color()
+
+const Texts = () => {
+  const textsGroupRef = useRef()
+
+  useFrame(({ camera }) => {
+    if (textsGroupRef.current) {
+      const { x, y, z } = camera.rotation
+      textsGroupRef.current.rotation.set(x, y, z)
+    }
+  })
+
+  const createTextMesh = (text, position, color, fontSize, fontWeight) => {
+    return (
+      <Text
+        key={text}
+        position={position}
+        color={color}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        maxWidth={10}
+        lineHeight={1}
+        letterSpacing={-0.05}
+        textAlign="center"
+      >
+        {text}
+      </Text>
+    )
+  }
+
+  return (
+    <group ref={textsGroupRef}>
+      {createTextMesh('WANTED', [0, 2.75, 0], 'red', 0.5)}
+      {createTextMesh('FOR SUBVERSION', [0, 2.35, 0], 'white', 0.25)}
+      {createTextMesh('REWARD $150.000', [0, -0.65, 0], 'white', 0.25)}
+      {createTextMesh('DEAD OR ALIVE', [0, -1, 0], 'white', 0.25, 'bold')}
+    </group>
+  )
+}
 
 const Points = ({ objectUrl, nodesData, onNodeClick, config }) => {
   // Note: useGLTF caches it already
@@ -310,7 +348,7 @@ const Particles = ({ count }) => {
     <>
       <instancedMesh ref={mesh} args={[null, null, count]}>
         <sphereGeometry args={[1]} />
-        <pointsMaterial color={brandPalette.red} size={0.02} transparent={true} sizeAttenuation={false} opacity={0.3} />
+        <pointsMaterial color={brandPalette.red} size={0.02} transparent={true} sizeAttenuation={false} opacity={0.1} />
       </instancedMesh>
     </>
   )
@@ -383,4 +421,4 @@ const DialogHash = styled.div`
   padding-top: 5px;
 `
 
-export { CameraControls, Lights, Model, Particles, Point, Points }
+export { CameraControls, Lights, Model, Particles, Point, Points, Texts }

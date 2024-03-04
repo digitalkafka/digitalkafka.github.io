@@ -5,7 +5,7 @@ import { PerspectiveCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { EffectComposer, Bloom, Glitch } from '@react-three/postprocessing'
 import React, { Suspense } from 'react'
-import { Lights, Particles, CameraControls, Model } from './Components'
+import { Lights, Particles, CameraControls, Model, Texts } from './Components'
 
 const ThreeCanary = (props) => {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
@@ -19,6 +19,8 @@ const ThreeCanary = (props) => {
       <Lights config={config} />
 
       <Suspense fallback={null}>
+        <Texts />
+
         <Model
           scale={config.model.scale}
           objectUrl={props.objectUrl}
