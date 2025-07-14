@@ -1,11 +1,11 @@
 {
-  "name": "@kappasigmamu/canary-component",
-  "version": "0.4.13-experimental",
-  "description": "React Component that renders the KappaSigmaMu Canary in 3D",
+  "name": "digitalkafka",
+  "version": "0.0.1",
+  "description": "Digital Kafka website",
   "keywords": [
-    "kusama",
-    "blockchain",
-    "polkadot",
+    "art",
+    "music",
+    "generative",
     "react",
     "threejs",
     "3d"
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KappaSigmaMu/canary-component.git"
+    "url": "git+https://github.com/laurogripa/digitalkafka.github.io.git"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -48,6 +48,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^6.2.0",
     "eslint-webpack-plugin": "^4.0.1",
+    "gh-pages": "^6.3.0",
     "react-scripts": "^5.0.1"
   },
   "scripts": {
@@ -57,7 +58,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.{js,jsx}\" --fix",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.{js,jsx}\""
+    "lint": "eslint \"{src,apps,libs,test}/**/*.{js,jsx}\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -72,9 +75,9 @@
     "not op_mini all"
   ],
   "bugs": {
-    "url": "https://github.com/KappaSigmaMu/canary-component/issues"
+    "url": "https://github.com/laurogripa/digitalkafka.github.io/issues"
   },
   "homepage": ".",
-  "author": "Vilson Vieira",
+  "author": "Lauro Gripa",
   "license": "MIT"
 }
