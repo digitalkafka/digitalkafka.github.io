@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/laurogripa/digitalkafka.github.io.git"
+    "url": "git+https://github.com/digitalkafka/digitalkafka.github.io.git"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -75,7 +75,7 @@
     "not op_mini all"
   ],
   "bugs": {
-    "url": "https://github.com/laurogripa/digitalkafka.github.io/issues"
+    "url": "https://github.com/digitalkafka/digitalkafka.github.io/issues"
   },
   "homepage": ".",
   "author": "Lauro Gripa",
